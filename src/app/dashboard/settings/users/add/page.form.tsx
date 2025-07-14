@@ -10,6 +10,7 @@ import { Form, Formik } from "formik";
 import { actionAddAddUser } from "./page.form_action";
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
 import { notificationShow, updateFailureNotification, updateSuccessNotication } from "@/components/Notification";
+import { SessionData } from "@/types/utils";
 
 export const addUsersSchema = yup.object().shape({
     email: yup.string().email().required("Email is required"),
@@ -18,8 +19,9 @@ export const addUsersSchema = yup.object().shape({
 })
 
 export default function UsersAddForm({
+    session_data,
     usersRoles
-}: Readonly<{usersRoles: Array<ResponseUserRoles>}>) {
+}: Readonly<{session_data: SessionData, usersRoles: Array<ResponseUserRoles>}>) {
     const [usersRolesData] = useState<Array<ResponseUserRoles>>(usersRoles)
     const pagesTitleContext = useContext(PageTitleContext)
     const [state, formAction, pending] = useActionState(actionAddAddUser, {message: ResponseDefaultMessage.None, response_data: ""})
@@ -53,8 +55,11 @@ export default function UsersAddForm({
             onSubmit={(value) => {
                 startTransition(() => {
                     formAction({
-                        ...value,
-                        user_role: parseInt(value.user_role),
+                        data: {
+                            ...value,
+                            user_role: parseInt(value.user_role),
+                        },
+                        session_data: session_data
                     })
                 })
             }}

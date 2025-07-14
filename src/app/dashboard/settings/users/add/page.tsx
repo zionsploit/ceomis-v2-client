@@ -15,5 +15,5 @@ export default async function Page() {
 
     const get_data: AxiosResponse<Array<ResponseUserRoles>> = await axiosClient(session_data).get("/users/get-all-roles")
 
-    return <UsersAddForm usersRoles={get_data.data} />
+    return <UsersAddForm session_data={session_data} usersRoles={get_data.data} />
 }
