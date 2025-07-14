@@ -1,6 +1,5 @@
 import { SessionData } from "@/types/utils";
-import { createCipheriv, createDecipheriv, scryptSync } from 'node:crypto'
-
+import { createCipheriv, createDecipheriv, scryptSync } from 'crypto'
 
 const password = "300ZPKM2R0STXN1PIS397PL6RXZH3BJG"
 const algorithm = 'aes-192-cbc'
