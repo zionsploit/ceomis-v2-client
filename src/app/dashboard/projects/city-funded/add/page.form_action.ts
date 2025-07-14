@@ -1,12 +1,17 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
 import { axiosClient } from "@/provider/axiosClient";
 import { RequestAddProjects } from "@/types/Projects";
-import { ActionReturnState } from "@/types/utils";
+import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
 
-export async function actionAddProjects (state: ActionReturnState<string>, data: RequestAddProjects) {
+type Request = {
+    data: RequestAddProjects,
+    session_data: SessionData
+}
 
-    const response: AxiosResponse<string> = await axiosClient().post("/projects/add", data)
+export async function actionAddProjects (state: ActionReturnState<string>, request: Request) {
+
+    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/projects/add", request.data)
 
     if (response.status == HttpStatusCode.Created) {
         if (String(response.data).isNotEmpty()) {

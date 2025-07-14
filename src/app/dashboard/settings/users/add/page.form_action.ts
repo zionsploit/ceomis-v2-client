@@ -1,12 +1,17 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
 import { axiosClient } from "@/provider/axiosClient";
 import { RequestAddUser } from "@/types/Users";
-import { ActionReturnState } from "@/types/utils";
+import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
 
-export async function actionAddAddUser (state: ActionReturnState<string>, data: RequestAddUser) {
+type Request = {
+    data: RequestAddUser,
+    session_data: SessionData
+}
 
-    const response: AxiosResponse<string | number> = await axiosClient().post("/users/create", data)
+export async function actionAddAddUser (state: ActionReturnState<string>, request: Request) {
+
+    const response: AxiosResponse<string | number> = await axiosClient(request.session_data).post("/users/create", request.data)
 
     if (response.status == HttpStatusCode.Created) {
         if (response.data.toString().isNotEmpty()) {
