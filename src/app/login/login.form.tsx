@@ -6,7 +6,7 @@ import { RequestUserLogin } from "@/types/Users"
 import { startTransition, useActionState, useEffect, useRef } from "react"
 import { ResponseLoginMessage } from "@/entity/Response.enum"
 import { notifications } from "@mantine/notifications"
-import { IconAlertTriangle, IconClock, IconX } from '@tabler/icons-react';
+import { IconAlertTriangle, IconCheck, IconClock, IconX } from '@tabler/icons-react';
 import { redirect } from "next/navigation"
 
 const loginSchema = yup.object().shape({
@@ -35,32 +35,35 @@ export const LoginForm = () => {
             });
         }
 
-        if (stateMessage != ResponseLoginMessage.NoResponse && !pending) {
-            if (stateMessage == ResponseLoginMessage.LoginSuccess) {
-                redirect("/dashboard/home")
+       if (stateMessage == ResponseLoginMessage.LoginSuccess) {
+            notifications.update({
+                id: toastIdRef.current ?? undefined,
+                title: 'LOGIN SUCCESS',
+                message: "Oops! Your email or password is incorrect. Please try again.",
+                icon: <ThemeIcon variant="white" size="lg" color="green"><IconCheck stroke={5} /></ThemeIcon>,
+                loading: false,
+                autoClose: 5000,
+            });
+            redirect("/dashboard/home")
 
-            } else if (stateMessage == ResponseLoginMessage.InvalidCredentials) {
-                notifications.update({
-                    id: toastIdRef.current ?? undefined,
-                    title: 'INVALID CREDENTIALS',
-                    message: 'Oops! Your email or password is incorrect. Please try again.',
-                    icon: <ThemeIcon variant="white" size="lg" color="red"><IconX stroke={5} /></ThemeIcon>,
-                    loading: false,
-                    autoClose: 5000,
-                });
-            } else if (stateMessage == ResponseLoginMessage.SomethingWentWrong) {
-                notifications.update({
-                    id: toastIdRef.current ?? undefined,
-                    title: 'SOMETHING WENT WRONG',
-                    message: 'An unexpected error occurred. Please try again later.',
-                    loading: false,
-                    icon: <ThemeIcon variant="white" size="xl" color="yellow"><IconAlertTriangle /></ThemeIcon>,
-                    autoClose: 5000,
-                });
-            }
-
-            toastIdRef.current = null; // Reset
-
+        } else if (stateMessage == ResponseLoginMessage.InvalidCredentials) {
+            notifications.update({
+                id: toastIdRef.current ?? undefined,
+                title: 'INVALID CREDENTIALS',
+                message: 'Oops! Your email or password is incorrect. Please try again.',
+                icon: <ThemeIcon variant="white" size="lg" color="red"><IconX stroke={5} /></ThemeIcon>,
+                loading: false,
+                autoClose: 5000,
+            });
+        } else if (stateMessage == ResponseLoginMessage.SomethingWentWrong) {
+            notifications.update({
+                id: toastIdRef.current ?? undefined,
+                title: 'SOMETHING WENT WRONG',
+                message: 'An unexpected error occurred. Please try again later.',
+                loading: false,
+                icon: <ThemeIcon variant="white" size="xl" color="yellow"><IconAlertTriangle /></ThemeIcon>,
+                autoClose: 5000,
+            });
         }
     }, [state, pending])
 
