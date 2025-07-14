@@ -8,6 +8,7 @@ import { ModalsProvider } from "@mantine/modals";
 import { IconBell, IconLogout, IconSearch, IconUserStar } from "@tabler/icons-react";
 import Image from "next/image";
 import React from "react";
+import { logout } from "./logout_action";
 
 export default function DashboardTemplate({
     children
@@ -46,7 +47,7 @@ export default function DashboardTemplate({
                     <Menu.Item leftSection={<ThemeIcon variant="transparent"><IconUserStar /></ThemeIcon>}>
                         Profile
                     </Menu.Item>
-                    <Menu.Item leftSection={<ThemeIcon variant="transparent"><IconLogout /></ThemeIcon>}>
+                    <Menu.Item onClick={logout} leftSection={<ThemeIcon variant="transparent"><IconLogout /></ThemeIcon>}>
                         Sign Out
                     </Menu.Item>
                   </Menu.Dropdown>
