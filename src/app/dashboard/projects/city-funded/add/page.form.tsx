@@ -16,7 +16,7 @@ import { ResponseDefaultMessage } from "@/entity/Response.enum";
 import { notificationShow, updateFailureNotification, updateSuccessNotication } from "@/components/Notification";
 import { ProjectStatus } from "@/types/Projects";
 import dayjs from "dayjs";
-import { UsersData } from "@/types/utils";
+import { SessionData } from "@/types/utils";
 
 export const projectsFormSchema = yup.object().shape({
     project_year: yup.date().required("Project year is required").default(new Date()),
@@ -39,9 +39,9 @@ export const projectsFormSchema = yup.object().shape({
 })
 
 export default function AddProjects({
-    users_data,
+    session_data,
     projects_data
-}: Readonly<{users_data: UsersData, projects_data: ResponsePrepareAllSettings}>) {
+}: Readonly<{session_data: SessionData, projects_data: ResponsePrepareAllSettings}>) {
     const [state, formAction, pending] = useActionState(actionAddProjects, {message: ResponseDefaultMessage.None, response_data: ""})
     const [projectTakersData] = useState<Array<ResponseTakers>>(projects_data.s_takers)
     const [projectInchargeData] = useState<Array<ResponseIncharge>>(projects_data.s_incharge)
@@ -97,29 +97,32 @@ export default function AddProjects({
 
                     startTransition(() => {
                         formAction({
-                            project_year: Number(dayjs(value.project_year).year()),
-                            project_name: value.project_name,
-                            project_code: value.project_code,
-                            project_status: value.project_status as ProjectStatus,
-                            barangays: barangay,
-                            appropriation: value.appropriation,
-                            approved_budget_contact: value.approved_budget_contact,
-                            contractor_id: Number(value.contractor_id),
-                            contract_cost: value.contract_cost,
-                            start_date: value.start_date,
-                            calendar_days: null,
-                            time_extensions: null,
-                            target_date: value.target_date,
-                            project_type_id: Number(value.project_type_id),
-                            project_category_id: Number(value.project_category_id),
-                            project_sof_id: Number(value.project_sof_id),
-                            project_incharge_id: Number(value.project_incharge_id),
-                            sustainable_development_goals: sdg,
-                            sector: sector,
-                            project_takers_id: Number(value.project_takers_id),
-                            accomplished: value.accomplished,
-                            remarks: value.remarks,
-                            prepared_users_id: Number(users_data.id)
+                            data: {
+                                project_year: Number(dayjs(value.project_year).year()),
+                                project_name: value.project_name,
+                                project_code: value.project_code,
+                                project_status: value.project_status as ProjectStatus,
+                                barangays: barangay,
+                                appropriation: value.appropriation,
+                                approved_budget_contact: value.approved_budget_contact,
+                                contractor_id: Number(value.contractor_id),
+                                contract_cost: value.contract_cost,
+                                start_date: value.start_date,
+                                calendar_days: null,
+                                time_extensions: null,
+                                target_date: value.target_date,
+                                project_type_id: Number(value.project_type_id),
+                                project_category_id: Number(value.project_category_id),
+                                project_sof_id: Number(value.project_sof_id),
+                                project_incharge_id: Number(value.project_incharge_id),
+                                sustainable_development_goals: sdg,
+                                sector: sector,
+                                project_takers_id: Number(value.project_takers_id),
+                                accomplished: value.accomplished,
+                                remarks: value.remarks,
+                                prepared_users_id: Number(session_data.users.id)
+                            },
+                            session_data: session_data,
                         })   
                     })
                 }}
@@ -577,7 +580,7 @@ export default function AddProjects({
                                 )}
                             </FastField>
                             <Flex my="md" justify="space-between">
-                                <Text c="dimmed" ft="small" fs="italic" label={`Prepared By ${users_data.email}`} />
+                                <Text c="dimmed" ft="small" fs="italic" label={`Prepared By ${session_data.users.email}`} />
                                 <Button type="submit">Submit</Button>
                             </Flex>
                         </Stack>

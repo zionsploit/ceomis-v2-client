@@ -15,5 +15,5 @@ export default async function Page() {
 
     const response: AxiosResponse<ResponsePrepareAllSettings> = await axiosClient(auth_session).get("/projects/prepare-add-projects")
 
-    return <AddProjects users_data={auth_session.users} projects_data={response.data} />
+    return <AddProjects session_data={auth_session} projects_data={response.data} />
 }
