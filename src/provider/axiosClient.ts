@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const apiURL = "http://127.0.0.1:3001/api"
+export const apiURL = process.env.NEXT_PUBLIC_API_URL
 
 export const axiosClient = (headers: { auth: string, sid: string}) => {
 
