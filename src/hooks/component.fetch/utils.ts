@@ -8,4 +8,4 @@ export type FetcherType = {
     }
 }
 
-export const fetcher = <T>(request: FetcherType): Promise<T> => axiosClient({auth: request.headers.auth, sid: request.headers.sid}).get(request.url).then(res => res.data)
+export const fetcher = <T>(request: FetcherType): Promise<T> => axiosClient({auth: request.headers.auth, sid: request.headers.sid}).get(request.url).then(res => res.data).catch((err) => console.log("Error: ", err))
