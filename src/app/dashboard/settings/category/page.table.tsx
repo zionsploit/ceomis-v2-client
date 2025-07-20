@@ -40,6 +40,7 @@ export default function CategoriesTable({
     return <>
         <Group w={rem("100%")}>
             <TextInput flex={1} 
+                disabled={categories.length == 0}
                 placeholder="Search here ..."
                 onChange={OnHandlerSearchChange}
                 value={searchData}
@@ -69,7 +70,7 @@ export default function CategoriesTable({
                     </Table.Td>
                 </Table.Tr>
                 ): <Table.Tr>
-                        <Table.Td align="center" colSpan={2} fz="xs" fw="bold">NO SEARCH RESULT</Table.Td>
+                        <Table.Td align="center" colSpan={2} fz="xs" fw="bold">NO DATA RESULT</Table.Td>
                     </Table.Tr>
                 }
             </Table.Tbody>
