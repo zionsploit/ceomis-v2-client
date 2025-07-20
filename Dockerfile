@@ -1,51 +1,78 @@
 # Use the official Bun image as base
+# Base stage for dependencies
 FROM oven/bun:1 AS base
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and bun.lockb (if exists)
-COPY package.json bun.lock ./
+# Copy package files
+COPY package.json bun.lock* ./
 
 # Install dependencies
 RUN bun install --frozen-lockfile
 
-# Copy source code
-COPY . .
+# Development stage - optimized for volume mounting
+FROM oven/bun:1 AS development
 
-# Build the Next.js application
-RUN bun run build
-
-# Production stage
-FROM base AS production
-
-# Set working directory
 WORKDIR /app
 
-# Copy built application from base stage
-COPY --from=base /app/.next ./.next
-COPY --from=base /app/public ./public
+# Copy dependencies from base
+COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/package.json ./package.json
-COPY --from=base /app/bun.lock ./
-COPY --from=base /app/next.config.* ./
-
-# Install only production dependencies
-RUN bun install --production --frozen-lockfile
+COPY --from=base /app/bun.lock* ./
 
 # Create non-root user
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-# Change ownership of the app directory
-RUN chown -R nextjs:nodejs /app
+# Set environment
+ENV NODE_ENV=development
+ENV PORT=3000
+
+# Create necessary directories and set permissions
+RUN mkdir -p .next public && \
+    chown -R nextjs:nodejs /app
+
+# Switch to non-root user
 USER nextjs
 
-# Expose port 3000
 EXPOSE 3000
 
-# Set environment to production
+CMD ["bun", "run", "dev"]
+
+
+# Production stage
+FROM oven/bun:1 AS production
+
+WORKDIR /app
+
+# Copy dependencies from base
+COPY --from=base /app/node_modules ./node_modules
+COPY --from=base /app/package.json ./package.json
+COPY --from=base /app/bun.lock* ./
+
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+# Create necessary directories and set permissions
+RUN mkdir -p .next public && \
+    chown -R nextjs:nodejs /app
+
+# COPY
+COPY src /app/src
+COPY public /app/public
+COPY tsconfig.json next.config.ts *.mjs /app/
+
+# Build to production
+RUN bun run build
+
+# Set environment
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Start the application
-CMD ["bun", "start"]
+# Switch to non-root user
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["bun", "run", "start"]
