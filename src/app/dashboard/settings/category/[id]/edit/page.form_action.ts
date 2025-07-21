@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { axiosClient } from "@/provider/axiosClient";
+import { apiURL, axiosClient } from "@/provider/axiosClient";
 import { RequestUpdateCategories, ResponseCategories } from "@/types/Settings";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -11,7 +11,9 @@ type Request = {
 
 export async function actionUpdateCategory(state: ActionReturnState<ResponseCategories>, request: Request) {
 
-    const response: AxiosResponse<ResponseCategories> = await axiosClient(request.session_data).post("/settings/categories/update", request.data)
+    const response: AxiosResponse<ResponseCategories> = await axiosClient(request.session_data).post("/settings/categories/update", request.data, {
+        baseURL: apiURL
+    })
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data.name.isNotEmpty() && response.data.id.toString().isNotEmpty()) {

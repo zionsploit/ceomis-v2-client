@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum"
-import { axiosClient } from "@/provider/axiosClient"
+import { apiURL, axiosClient } from "@/provider/axiosClient"
 import { RequestAddSustainableDevelopmentGoals } from "@/types/Settings"
 import { SessionData } from "@/types/utils"
 import { AxiosResponse, HttpStatusCode } from "axios"
@@ -14,7 +14,9 @@ type Request = {
 }
 
 export async function actionAddSdg (state: State, request: Request) {
-    const response: AxiosResponse<string | number> = await axiosClient(request.session_data).post("/settings/sdg/add", request.data)
+    const response: AxiosResponse<string | number> = await axiosClient(request.session_data).post("/settings/sdg/add", request.data, {
+        baseURL: apiURL
+    })
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data.toString().isNotEmpty()) {

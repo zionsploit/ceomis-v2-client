@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { axiosClient } from "@/provider/axiosClient";
+import { apiURL, axiosClient } from "@/provider/axiosClient";
 import { RequestUpdateBarangay, ResponseBarangays } from "@/types/Settings";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -11,7 +11,9 @@ type Request = {
 
 export async function actionUpdateBarangay (state: ActionReturnState<ResponseBarangays>, request: Request) {
 
-    const response: AxiosResponse<ResponseBarangays> = await axiosClient(request.session_data).post("/settings/barangay/update", request.data)
+    const response: AxiosResponse<ResponseBarangays> = await axiosClient(request.session_data).post("/settings/barangay/update", request.data, {
+        baseURL: apiURL
+    })
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data.name.isNotEmpty()) {
