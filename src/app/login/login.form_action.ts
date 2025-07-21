@@ -1,7 +1,7 @@
 'use server'
 
 import { ResponseLoginMessage } from "@/entity/Response.enum";
-import { axiosClient } from "@/provider/axiosClient";
+import { axiosClient, AxiosClientRequestHeaders } from "@/provider/axiosClient";
 import { RequestUserLogin, ResponseLogin } from "@/types/Users";
 import { AxiosResponse, HttpStatusCode } from "axios";
 import { cookies } from "next/headers";
@@ -17,7 +17,13 @@ type State = {
 
 export async function actionLogin (state: State, data: RequestUserLogin) {
     const cookieStore = await cookies()
-    const response: AxiosResponse<ResponseLogin> = await axiosClient({auth: "", sid: ""}).post("/users/login", data)
+
+    const requestHeaders: AxiosClientRequestHeaders = {
+        auth: "",
+        sid: ""
+    }
+    
+    const response: AxiosResponse<ResponseLogin> = await axiosClient(requestHeaders).post("/users/login", data)
 
     if (response.status == HttpStatusCode.Ok) {
         const header = response.headers;
