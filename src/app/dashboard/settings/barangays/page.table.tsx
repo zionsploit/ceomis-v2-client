@@ -40,6 +40,7 @@ export default function BarangayTable({
     return <>
         <Group w={rem("100%")}>
             <TextInput flex={1}
+                disabled={barangays.length == 0}
                 placeholder="Search here ..."
                 onChange={OnHandlerSearchChange}
                 value={searchData}
@@ -76,7 +77,7 @@ export default function BarangayTable({
                     </Table.Td>
                 </Table.Tr>
                 ): <Table.Tr>
-                        <Table.Td align="center" colSpan={3} fz="xs" fw="bold">NO SEARCH RESULT</Table.Td>
+                        <Table.Td align="center" colSpan={3} fz="xs" fw="bold">NO DATA RESULT</Table.Td>
                     </Table.Tr>
                 }
             </Table.Tbody>

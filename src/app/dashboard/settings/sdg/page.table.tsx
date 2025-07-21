@@ -40,6 +40,7 @@ export default function SdgTable({
     return <>
         <Group w={rem("100%")}>
             <TextInput flex={1} 
+                disabled={sdg.length == 0}
                 placeholder="Search here ..."
                 onChange={OnHandlerSearchChange}
                 value={searchData}
@@ -69,7 +70,7 @@ export default function SdgTable({
                     </Table.Td>
                 </Table.Tr>
                 ): <Table.Tr>
-                        <Table.Td align="center" colSpan={2} fz="xs" fw="bold">NO SEARCH RESULT</Table.Td>
+                        <Table.Td align="center" colSpan={2} fz="xs" fw="bold">NO DATA RESULT</Table.Td>
                     </Table.Tr>}
             </Table.Tbody>
         </Table>

@@ -35,6 +35,7 @@ export default function PageTable({
         <Paper my="md">
             <Group w={rem("100%")}>
                 <TextInput flex={1}
+                    disabled={projects.length == 0}
                     placeholder="Search here ..."
                     onChange={OnHandlerSearchChange}
                     value={searchData}
@@ -79,7 +80,7 @@ export default function PageTable({
                         </Table.Td>
                     </Table.Tr>
                     ): <Table.Tr>
-                            <Table.Td align="center" colSpan={6} fz="xs" fw="bold">NO SEARCH RESULT</Table.Td>
+                            <Table.Td align="center" colSpan={6} fz="xs" fw="bold">NO DATA RESULT</Table.Td>
                         </Table.Tr>
                     }
                 </Table.Tbody>

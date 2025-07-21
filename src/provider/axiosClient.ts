@@ -1,11 +1,14 @@
 import axios from "axios";
 
-export const apiURL = "http://127.0.0.1:3001/api"
+export const apiURL = process.env.NEXT_PUBLIC_API_URL
+export const apiDockerURL = process.env.NEXT_PUBLIC_DOCKER_API_URL
 
-export const axiosClient = (headers: { auth: string, sid: string}) => {
+export type AxiosClientRequestHeaders = { auth: string, sid: string}
 
-    return axios.create({
-        baseURL: apiURL,
+export const axiosClient = (headers: AxiosClientRequestHeaders) => {
+
+    const instance = axios.create({
+        baseURL: apiDockerURL,
         timeout: 100000,
         fetchOptions: {
             caches: 'no-store'
@@ -13,6 +16,8 @@ export const axiosClient = (headers: { auth: string, sid: string}) => {
         headers: {
             Authorization: `Bearer ${headers.auth}`,
             '_SID': headers.sid
-        }
+        },
     })
+
+    return instance
 }

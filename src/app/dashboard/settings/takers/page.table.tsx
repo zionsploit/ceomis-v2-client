@@ -40,6 +40,7 @@ export default function TakersTable({
     return <>
         <Group w={rem("100%")}>
             <TextInput flex={1} 
+                disabled={takers.length == 0}
                 placeholder="Search here ..."
                 onChange={OnHandlerSearchChange}
                 value={searchData}
@@ -71,7 +72,7 @@ export default function TakersTable({
                     </Table.Td>
                 </Table.Tr>
                 ): <Table.Tr>
-                        <Table.Td align="center" colSpan={3} fz="xs" fw="bold">NO SEARCH RESULT</Table.Td>
+                        <Table.Td align="center" colSpan={3} fz="xs" fw="bold">NO DATA RESULT</Table.Td>
                     </Table.Tr>
                 }
             </Table.Tbody>

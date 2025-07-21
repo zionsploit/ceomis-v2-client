@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { axiosClient } from "@/provider/axiosClient";
+import { apiURL, axiosClient } from "@/provider/axiosClient";
 import { RequestUpdateProjects } from "@/types/Projects";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -11,7 +11,9 @@ type Request = {
 
 export async function actionUpdateProjects (state: ActionReturnState<string>, request: Request) {
 
-    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/projects/update", request.data)
+    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/projects/update", request.data, {
+        baseURL: apiURL
+    })
 
     if (response.status == HttpStatusCode.Created) {
 

@@ -7,7 +7,7 @@ export const notificationShow = () => {
         loading: true,
         title: 'Loading',
         message: "The operation is currently in progress",
-        icon: <ThemeIcon variant="transparent" size="xl" color="green"><IconClock /></ThemeIcon>,
+        icon: <ThemeIcon size="xl" color="green"><IconClock size={30} /></ThemeIcon>,
         autoClose: true,
         withCloseButton: false,
     })
@@ -19,7 +19,7 @@ export const updateSuccessNotication = (ref: string | null) => {
         title: 'SUCCESS',
         message: "The operation was completed successfully",
         loading: false,
-        icon: <ThemeIcon variant="transparent" size="xl" color="green"><IconCheck /></ThemeIcon>,
+        icon: <ThemeIcon size="xl" color="green"><IconCheck size={30} /></ThemeIcon>,
         autoClose: 5000,
     });
 }
@@ -30,7 +30,7 @@ export const updateFailureNotification = (ref: string | null) => {
         title: 'Failure',
         message: 'The operation failed',
         loading: false,
-        icon: <ThemeIcon variant="transparent" size="xl" color="yellow"><IconAlertTriangle /></ThemeIcon>,
+        icon: <ThemeIcon size="xl" color="yellow"><IconAlertTriangle size={30} /></ThemeIcon>,
         autoClose: 5000,
     });
 }

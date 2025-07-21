@@ -1,9 +1,10 @@
-import { axiosClient } from "@/provider/axiosClient";
+import { apiURL, axiosClient } from "@/provider/axiosClient";
 import { SessionData } from "@/types/utils";
 
 export async function generateFinancialStatusReports (state: string, session_data: SessionData) {
    const response = await axiosClient(session_data).post("/generate-reports/reports_financial_status", null, {
       responseType: 'blob',
+      baseURL: apiURL
     });
 
     const filename = "financial-status-reports.pdf";
