@@ -25,10 +25,8 @@ export default function UserAccountInfoForm({
 
     useEffect(() => {
         const stateMessage = state.message
-
-        if (pending) {
-            toastIdRef.current = notificationShow()
-        }
+        
+        if (pending) toastIdRef.current = notificationShow()
 
         if (stateMessage == ResponseDefaultMessage.Success) updateSuccessNotication(toastIdRef.current)
         else if (stateMessage == ResponseDefaultMessage.Failure) updateFailureNotification(toastIdRef.current)
