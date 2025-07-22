@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum"
-import { apiURL, axiosClient } from "@/provider/axiosClient"
+import {  axiosClient } from "@/provider/axiosClient"
 import { RequestUpdateSustainableDevelopmentGoals, ResponseSustainableDevelopmentGoals } from "@/types/Settings"
 import { SessionData } from "@/types/utils"
 import { AxiosResponse, HttpStatusCode } from "axios"
@@ -15,9 +15,7 @@ type Request = {
 }
 
 export async function actionUpdateSdg(state: State, request: Request) {
-    const response: AxiosResponse<ResponseSustainableDevelopmentGoals> = await axiosClient(request.session_data).post("/settings/sdg/update", request.data, {
-        baseURL: apiURL
-    });
+    const response: AxiosResponse<ResponseSustainableDevelopmentGoals> = await axiosClient(request.session_data).post("/settings/sdg/update", request.data, );
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data.name.isNotEmpty() && response.data.id.toString().isNotEmpty()) {

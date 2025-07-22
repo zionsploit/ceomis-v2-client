@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { RequestDeleteProjectRemarks } from "@/types/Projects";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -11,9 +11,7 @@ type Request = {
 
 export async function deleteProjectRemarks(state: ActionReturnState<string>, request: Request) {
 
-    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/projects/delete-project-remarks", request.data, {
-        baseURL: apiURL
-    })
+    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/projects/delete-project-remarks", request.data, )
 
     if (response.status == HttpStatusCode.Created) {
         return {

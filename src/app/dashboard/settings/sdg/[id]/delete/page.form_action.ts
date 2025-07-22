@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum"
-import { apiURL, axiosClient } from "@/provider/axiosClient"
+import {  axiosClient } from "@/provider/axiosClient"
 import { RequestDeleteSustainableDevelopmentGoals } from "@/types/Settings"
 import { SessionData } from "@/types/utils"
 import { AxiosResponse, HttpStatusCode } from "axios"
@@ -16,9 +16,7 @@ type Request = {
 
 export async function actionDeleteSdgById(state: State, request: Request) {
 
-    const response: AxiosResponse<string | null> = await axiosClient(request.session_data).post("/settings/sdg/delete", request.data, {
-        baseURL: apiURL
-    });
+    const response: AxiosResponse<string | null> = await axiosClient(request.session_data).post("/settings/sdg/delete", request.data, );
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data?.toString().isNotEmpty()) {

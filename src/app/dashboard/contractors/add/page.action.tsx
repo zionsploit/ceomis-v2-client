@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { RequestAddContractors } from "@/types/Settings";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -10,9 +10,7 @@ type Request = {
 }
 
 export async function actionAddContractor(state: ActionReturnState<string>, request: Request) {
-    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/contractors/add", request.data, {
-        baseURL: apiURL
-    })
+    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/contractors/add", request.data, )
 
     if (response.status == HttpStatusCode.Created) {
         return {
