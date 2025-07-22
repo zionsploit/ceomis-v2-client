@@ -7,6 +7,7 @@ import { generateProjectsProfileAction } from "./page.modal_projects_generate_pr
 import { useListState } from "@mantine/hooks"
 import { ReportsEventsMessage, SessionData } from "@/types/utils"
 import { ErrorComponent, LoadingComponent } from "@/components/Response"
+import { serverURL } from "@/provider/axiosClient"
 
 export const OpenGenerateProjectsProfileModal = (projects: ResponseProjectsById, session_data: SessionData) => modals.open({
     title: <Text fz="lg" fw="bold" c="dimmed">GENERATE PROJECTS PROFILE</Text>,
@@ -41,7 +42,7 @@ const GenerateProjectsProfile = ({projects, session_data}: { projects: ResponseP
             eventSourceRefId.current.close()
         }
 
-        const eventSource = new EventSource(`http://localhost:3001/sse-connection/${projects.projects_code}`)
+        const eventSource = new EventSource(`${serverURL}/sse-connection/${projects.projects_code}`)
         eventSourceRefId.current = eventSource
 
         eventSource.onopen = () => {

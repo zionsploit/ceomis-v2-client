@@ -7,6 +7,7 @@ import { generateProjectsRemarksAction } from "./page.modal_projects_generate_pr
 import { useListState } from "@mantine/hooks";
 import { ReportsEventsMessage, SessionData } from "@/types/utils";
 import { IconCheck, IconInfoHexagon } from "@tabler/icons-react";
+import { serverURL } from "@/provider/axiosClient";
 
 export const OpenGenerateProjectsRemarksModal = (projects: ResponseProjectsById, session_auth: SessionData) => modals.open({
     title: <Text fz="lg" fw="bold" c="dimmed">GENERATE PROJECTS REMARKS</Text>,
@@ -43,7 +44,7 @@ const GenerateProjectsRemarks = ({projects, session_auth}: { projects: ResponseP
             eventSourceRefId.current.close()
         }
 
-        const eventSource = new EventSource(`http://localhost:3001/sse-connection/${projects.projects_code}`)
+        const eventSource = new EventSource(`${serverURL}/sse-connection/${projects.projects_code}`)
         eventSourceRefId.current = eventSource
 
         eventSource.onopen = () => {
