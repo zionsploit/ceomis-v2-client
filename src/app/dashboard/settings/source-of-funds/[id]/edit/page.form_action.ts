@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum"
-import { apiURL, axiosClient } from "@/provider/axiosClient"
+import {  axiosClient } from "@/provider/axiosClient"
 import { RequestUpdateSourceOfFunds, ResponseSourceOfFunds } from "@/types/Settings"
 import { SessionData } from "@/types/utils"
 import { AxiosResponse, HttpStatusCode } from "axios"
@@ -15,9 +15,7 @@ type Request = {
 }
 
 export async function actionUpdateSof(state: State, request: Request) {
-    const response: AxiosResponse<ResponseSourceOfFunds> = await axiosClient(request.session_data).post("/settings/sof/update", request.data, {
-        baseURL: apiURL
-    });
+    const response: AxiosResponse<ResponseSourceOfFunds> = await axiosClient(request.session_data).post("/settings/sof/update", request.data, );
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data.name.isNotEmpty() && response.data.id.toString().isNotEmpty()) {

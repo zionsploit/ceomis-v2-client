@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { HttpStatusCode } from "axios";
 
@@ -32,7 +32,7 @@ export async function addProjectsRemarks(state: ActionReturnState<string>, reque
         headers: {
             "Content-Type": "multipart/form-data"
         },
-        baseURL: apiURL
+        
     })
 
     if (response.status == HttpStatusCode.Created) {

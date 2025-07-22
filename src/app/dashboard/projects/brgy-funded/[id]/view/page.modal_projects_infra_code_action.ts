@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { RequestUpsertProjectsInfraCode } from "@/types/Projects";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -10,9 +10,7 @@ type Request = {
 }
 
 export async function upsertProjectsInfraCodeAction(state: ActionReturnState<string>, request: Request) {
-    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/projects/upsert-projects-info-code", request.data, {
-        baseURL: apiURL
-    })
+    const response: AxiosResponse<string> = await axiosClient(request.session_data).post("/projects/upsert-projects-info-code", request.data, )
 
     if (response.status == HttpStatusCode.Created) {
         return {

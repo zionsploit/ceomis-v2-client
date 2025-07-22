@@ -1,10 +1,10 @@
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { SessionData } from "@/types/utils";
 
 export async function generateProjectsSummary (state: string, session_data: SessionData) {
    const response = await axiosClient(session_data).post("/generate-reports/reports_summary_list_of_projects", null, {
       responseType: 'blob',
-      baseURL: apiURL
+      
     });
 
     const filename = "projects-summary.pdf";

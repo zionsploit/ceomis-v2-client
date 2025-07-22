@@ -1,10 +1,10 @@
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { SessionData } from "@/types/utils";
 
 export async function generateProjectsSlippageReports (state: string, session_data: SessionData) {
    const response = await axiosClient(session_data).post("/generate-reports/reports_slippage_projects", null, {
       responseType: 'blob',
-      baseURL: apiURL
+      
     });
 
     const filename = "projects-slippage.pdf";

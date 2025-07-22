@@ -1,4 +1,4 @@
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { RequestGenerateProjectsProfile } from "@/types/Projects";
 import { SessionData } from "@/types/utils";
 
@@ -14,7 +14,7 @@ export async function generateProjectsRemarksAction (state: string, request: Req
     
     const response = await axiosClient(request.session_auth).post("/generate-reports/projects-remarks-by-id", request.data.projects_profile, {
         responseType: 'blob',
-        baseURL: apiURL
+        
     });
 
     const filename = request.data.file_name + ".pdf";

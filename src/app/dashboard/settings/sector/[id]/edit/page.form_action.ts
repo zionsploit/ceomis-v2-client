@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { RequestUpdateSector, ResponseSector } from "@/types/Settings";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -11,9 +11,7 @@ type Request = {
 
 export async function actionUpdateSector(state: ActionReturnState<ResponseSector>, request: Request) {
 
-    const response: AxiosResponse<ResponseSector> = await axiosClient(request.session_data).post("/settings/sector/update", request.data, {
-        baseURL: apiURL
-    })
+    const response: AxiosResponse<ResponseSector> = await axiosClient(request.session_data).post("/settings/sector/update", request.data, )
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data.name.isNotEmpty() && response.data.id.toString().isNotEmpty()) {

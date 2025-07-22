@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { apiURL, axiosClient } from "@/provider/axiosClient";
+import {  axiosClient } from "@/provider/axiosClient";
 import { RequestUpdateTakers, ResponseTakers } from "@/types/Settings";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -12,9 +12,7 @@ type Request = {
 
 export async function actionUpdateTakers(state: ActionReturnState<ResponseTakers>, request: Request) {
 
-    const response: AxiosResponse<ResponseTakers> = await axiosClient(request.session_data).post("/settings/takers/update", request.data, {
-        baseURL: apiURL
-    })
+    const response: AxiosResponse<ResponseTakers> = await axiosClient(request.session_data).post("/settings/takers/update", request.data, )
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data.name.isNotEmpty()) {

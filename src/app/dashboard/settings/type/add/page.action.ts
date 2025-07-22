@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum"
-import { apiURL, axiosClient } from "@/provider/axiosClient"
+import {  axiosClient } from "@/provider/axiosClient"
 import { RequestAddTypes } from "@/types/Settings"
 import { ActionReturnState, SessionData } from "@/types/utils"
 import { AxiosResponse, HttpStatusCode } from "axios"
@@ -12,9 +12,7 @@ type Request = {
 
 export async function actionAddType (state: ActionReturnState<string>, request: Request) {
 
-    const response: AxiosResponse<string | number> = await axiosClient(request.session_data).post("/settings/type/add", request.data, {
-        baseURL: apiURL
-    })
+    const response: AxiosResponse<string | number> = await axiosClient(request.session_data).post("/settings/type/add", request.data, )
 
     if (response.status == HttpStatusCode.Ok) {
         if (response.data.toString().isNotEmpty()) {

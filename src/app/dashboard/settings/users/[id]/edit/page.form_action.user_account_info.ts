@@ -1,5 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
-import { apiURL, axiosClient, AxiosClientRequestHeaders } from "@/provider/axiosClient";
+import {  axiosClient, AxiosClientRequestHeaders } from "@/provider/axiosClient";
 import { RequestAddUpdateUserInfoById } from "@/types/Users";
 import { ActionReturnState, SessionData } from "@/types/utils";
 import { AxiosResponse, HttpStatusCode } from "axios";
@@ -16,9 +16,7 @@ export async function updateUserAccountInfo(state: ActionReturnState<string>, re
         sid: request.session_data.sid
     }
 
-    const response: AxiosResponse<string> = await axiosClient(requestHeaders).post("/users/update-user-info-by-id", request.data, {
-        baseURL: apiURL
-    })
+    const response: AxiosResponse<string> = await axiosClient(requestHeaders).post("/users/update-user-info-by-id", request.data, )
 
     if (response.status == HttpStatusCode.Created) {
         
