@@ -6,6 +6,7 @@ import { IconCheck, IconInfoHexagon } from "@tabler/icons-react";
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { ErrorComponent, LoadingComponent } from "@/components/Response";
 import { generateProjectsSlippageReports } from "./page.modal_generate_projects_slippage_report_action";
+import { serverURL } from "@/provider/axiosClient";
 
 export const OpenGenerateProjectSlippageReports = (session_data: SessionData) => modals.open({
     title: <Text fz="lg" fw="bold" c="dimmed">GENERATE PROJECTS SLIPPAGE REPORTS</Text>,
@@ -40,7 +41,7 @@ const GenerateProjectSlippageReports = ({session_data} :{session_data: SessionDa
                 eventSourceRefId.current.close()
             }
     
-            const eventSource = new EventSource(`http://localhost:3001/sse-connection/projects-slippage-report`)
+            const eventSource = new EventSource(`${serverURL}/sse-connection/projects-slippage-report`)
             eventSourceRefId.current = eventSource
     
             eventSource.onopen = () => {

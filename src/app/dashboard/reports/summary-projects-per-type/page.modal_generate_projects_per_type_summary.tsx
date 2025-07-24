@@ -6,6 +6,7 @@ import { IconCheck, IconInfoHexagon } from "@tabler/icons-react";
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { ErrorComponent, LoadingComponent } from "@/components/Response";
 import { generateProjectsPerTypeSummary } from "./page.modal_generate_projects_per_type_summary_action";
+import { serverURL } from "@/provider/axiosClient";
 
 export const OpenGenerateProjectsPerTypeSummary = (session_data: SessionData) => modals.open({
     title: <Text fz="lg" fw="bold" c="dimmed">GENERATE PROJECTS PER TYPE SUMMARY</Text>,
@@ -40,7 +41,7 @@ const GenerateProjectsPerTypeSummary = ({session_data}: {session_data: SessionDa
                 eventSourceRefId.current.close()
             }
     
-            const eventSource = new EventSource(`http://localhost:3001/sse-connection/projects-summary`)
+            const eventSource = new EventSource(`${serverURL}/sse-connection/projects-summary`)
             eventSourceRefId.current = eventSource
     
             eventSource.onopen = () => {

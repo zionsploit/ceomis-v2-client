@@ -7,6 +7,7 @@ import { generateContractorsReportAction } from "./page.content_modal_generate_c
 import { ReportsEventsMessage, SessionData } from "@/types/utils";
 import { useListState } from "@mantine/hooks";
 import { IconCheck, IconInfoHexagon } from "@tabler/icons-react";
+import { serverURL } from "@/provider/axiosClient";
 
 export const OpenGenerateContractorsReport = (contractors: ResponseContractors, session_data: SessionData) => modals.open({
     title: <Text fz="lg" fw="bold" c="dimmed">GENERATE CONTRACTORS REPORTS</Text>,
@@ -41,7 +42,7 @@ const GenerateContractorsReport = ({contractors, session_data}: {contractors: Re
             eventSourceRefId.current.close()
         }
 
-        const eventSource = new EventSource(`http://localhost:3001/sse-connection/${contractors.name}`)
+        const eventSource = new EventSource(`${serverURL}/sse-connection/${contractors.name}`)
         eventSourceRefId.current = eventSource
 
         eventSource.onopen = () => {

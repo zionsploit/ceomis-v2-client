@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const apiURL = process.env.NEXT_PUBLIC_API_URL
+export const serverURL = process.env.NEXT_PUBLIC_SERVER_URL
 
 export type AxiosClientRequestHeaders = { auth: string, sid: string}
 

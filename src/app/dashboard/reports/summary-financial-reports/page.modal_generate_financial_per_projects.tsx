@@ -6,6 +6,7 @@ import { IconCheck, IconInfoHexagon } from "@tabler/icons-react";
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { ErrorComponent, LoadingComponent } from "@/components/Response";
 import { generateFinancialPerProjects } from "./page.modal_generate_financial_per_projects_action";
+import { serverURL } from "@/provider/axiosClient";
 
 export const OpenGenerateFinancialPerProjects = (session_data: SessionData) => modals.open({
     title: <Text fz="lg" fw="bold" c="dimmed">GENERATE FINANCIAL PER PROJECTS REPORTS</Text>,
@@ -40,7 +41,7 @@ const GenerateFinancialPerProjects = ({session_data}: {session_data: SessionData
                 eventSourceRefId.current.close()
             }
     
-            const eventSource = new EventSource(`http://localhost:3001/sse-connection/projects-financial-status-project`)
+            const eventSource = new EventSource(`${serverURL}/sse-connection/projects-financial-status-project`)
             eventSourceRefId.current = eventSource
     
             eventSource.onopen = () => {
