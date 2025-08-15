@@ -7,7 +7,7 @@ import { AxiosResponse, HttpStatusCode } from "axios";
 import { cookies } from "next/headers";
 import { decodeSdJwt, getClaims } from '@sd-jwt/decode';
 import { digest } from '@sd-jwt/crypto-nodejs';
-import { SessionData, UsersData } from "@/types/utils";
+import { SessionData, UserDetails, UsersData } from "@/types/utils";
 import { cipher_session_data } from "@/utils/crypto";
 
 type State = {
@@ -25,7 +25,22 @@ export async function actionLogin (state: State, data: RequestUserLogin) {
     
     const response: AxiosResponse<ResponseLogin> = await axiosClient(requestHeaders).post("/users/login", data)
 
-    if (response.status == HttpStatusCode.Ok) {
+    if (response.status == HttpStatusCode.Created) {
+        
+        // process response body into local storage
+        {
+            const body = response.data
+
+            const user_details: UserDetails = {
+                info_first_name: body.info_first_name,
+                info_id: body.info_id,
+                info_last_name: body.info_last_name,
+                info_middle_name: body.info_middle_name,
+            }
+            const user_details_to_string = JSON.stringify(user_details)
+            cookieStore.set("_user_details", user_details_to_string)
+        }
+
         const header = response.headers;
 
         const get_cookie = header['cookie']
@@ -59,15 +74,21 @@ export async function actionLogin (state: State, data: RequestUserLogin) {
                         const encrypt = cipher_session_data(session_data)
 
                         cookieStore.set('_auth', encrypt)
+
+                        return {
+                            message: ResponseLoginMessage.LoginSuccess,
+                            response: ""
+                        }
                     }
                 }
 
             }
 
         }
+
         return {
-            message: ResponseLoginMessage.LoginSuccess,
-            response: ""
+            message: ResponseLoginMessage.SomethingWentWrong,
+            response: "Can't Parse Response Data"
         }
     }
 
