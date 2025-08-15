@@ -61,3 +61,15 @@ export const AuthenticatingComponent = () => {
         </Paper>
     </>
 }
+
+export const RequiredComponents = () => {
+
+    return <>
+        <Paper my="md">
+            <Divider label="Module Unavailable" />
+            <Alert color="cyan">
+                <Text label="Unfortunately, this module is not yet available. Please update the missing requirements to proceed." ft="small" />
+            </Alert>
+        </Paper>
+    </>
+}
