@@ -24,7 +24,12 @@ export default function ProjectTypes() {
     if (isValidating) return <LoadingComponent />
     if (isLoading) return <LoadingComponent />
     if (error) return <ErrorComponent />
-    if (!data || data.length === 0) return <NoDataComponent />
+    if (!data || data.length === 0) return <>
+        <Paper my="md">
+            <Text label="Project by Type" ft="smallTitle" />
+            <NoDataComponent />
+        </Paper>
+    </>
 
     return <>
         <Paper my="md">

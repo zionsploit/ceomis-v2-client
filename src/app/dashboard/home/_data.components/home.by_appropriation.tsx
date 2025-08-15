@@ -22,7 +22,12 @@ export default function HomeByAppropriation() {
     if (isValidating) return <LoadingComponent />
     if (isLoading) return <LoadingComponent />
     if (error) return <ErrorComponent />
-    if (!data || data.length === 0) return <NoDataComponent />
+    if (!data || data.length === 0) return <>
+        <Paper my="md">
+            <Text label="Top 10 Projects by Appropriation" ft="smallTitle" />
+            <NoDataComponent />
+        </Paper>
+    </>
 
     return <>
         <Paper my="md">

@@ -25,7 +25,12 @@ export default function ProjectCategory() {
     if (isValidating) return <LoadingComponent />
     if (isLoading) return <LoadingComponent />
     if (error) return <ErrorComponent />
-    if (!data || data.length === 0) return <NoDataComponent />
+    if (!data || data.length === 0) return <>
+        <Paper my="md">
+            <Text label="Project By Category" ft="smallTitle" />
+            <NoDataComponent />
+        </Paper>
+    </>
     
 
     const dataValue = data.map((value) => {

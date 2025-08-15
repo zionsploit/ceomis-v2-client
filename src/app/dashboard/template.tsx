@@ -2,18 +2,20 @@
 
 import { NavbarNested } from "@/components/NavbarNested";
 import { Text } from "@/components/Text";
-import { ActionIcon, Anchor, AppShell, Box, Burger, Divider, Flex, Group, Menu, rem, TextInput, ThemeIcon, Tooltip } from "@mantine/core";
+import { ActionIcon, Alert, Anchor, AppShell, Box, Burger, Divider, Flex, Group, Menu, rem, TextInput, ThemeIcon, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { ModalsProvider } from "@mantine/modals";
-import { IconBell, IconLogout, IconSearch, IconUserStar } from "@tabler/icons-react";
+import { IconAlertTriangle, IconBell, IconLogout, IconSearch, IconUserStar } from "@tabler/icons-react";
 import Image from "next/image";
 import React from "react";
 import { logout } from "./logout_action";
+import { useAppSelector } from "@/provider/reactRedux/hooks";
 
 export default function DashboardTemplate({
     children
 }: Readonly<{children: React.ReactNode}>) {
     const [opened, { toggle }] = useDisclosure();
+    const userDetailsSelector = useAppSelector((state) => state.userDetailsReducer.userDetails)
 
     return <>
         <AppShell
@@ -81,6 +83,8 @@ export default function DashboardTemplate({
             </Flex>
           </AppShell.Navbar>
           <AppShell.Main>
+              {userDetailsSelector.data?.info_id == null ? <Alert withCloseButton m="sm" p="xs" color="yellow" title="Profile Update Required" icon={<IconAlertTriangle />}>
+                Please update your profile information — provide your first name, middle name, and last name — to unlock and use other features in the app.              </Alert> : null}
               <Box p="md">
                 <ModalsProvider>
                     {children}
