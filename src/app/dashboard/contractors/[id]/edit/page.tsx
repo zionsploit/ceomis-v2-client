@@ -1,5 +1,5 @@
 import { axiosClient } from "@/provider/axiosClient";
-import { ResponseContractors } from "@/types/Settings";
+import { ResponseContractorsWithProjects } from "@/types/Settings";
 import { AxiosResponse } from "axios";
 import ContractorsEditForm from "./page.form";
 import { get_auth_session } from "@/utils/helper";
@@ -16,7 +16,7 @@ export default async function Page({
     }
 
     const { id } = await params
-    const response: AxiosResponse<ResponseContractors> = await axiosClient(session_data).get(`/contractors/${id}`)
+    const response: AxiosResponse<ResponseContractorsWithProjects> = await axiosClient(session_data).get(`/contractors/${id}`)
 
     return <ContractorsEditForm session_data={session_data} contractors={response.data} />
 }
