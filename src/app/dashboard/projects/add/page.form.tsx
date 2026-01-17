@@ -17,6 +17,8 @@ import { notificationShow, updateFailureNotification, updateSuccessNotication } 
 import { ProjectStatus } from "@/types/Projects";
 import dayjs from "dayjs";
 import { SessionData } from "@/types/utils";
+import { useAppSelector } from "@/provider/reactRedux/hooks";
+import { notifications } from "@mantine/notifications";
 
 export const projectsFormSchema = yup.object().shape({
     project_year: yup.date().required("Project year is required").default(new Date()),
@@ -50,7 +52,8 @@ export default function AddProjects({
     const [projectTypeData] = useState<Array<ResponseTypes>>(projects_data.s_type)
     const [constractorsData] = useState<Array<ResponseContractors>>(projects_data.contractors)
     const [projectFundedType, setProjectFundedType] = useState<string>(ProjectFundedType.BarangayFunded.toString())
-    
+    const userDetailsSelector = useAppSelector((state) => state.userDetailsReducer.userDetails)
+
     const [selectedSector, setSelectedSector] = useListState(projects_data.s_sector.map((value) => {
         return {
             checked: false,
@@ -97,36 +100,45 @@ export default function AddProjects({
                     const sdg = selectedSdg.filter((data) => data.checked).map((data) => data.id)
                     const sector = selectedSector.filter((data) => data.checked).map((data) => data.id)
 
-                    startTransition(() => {
-                        formAction({
-                            data: {
-                                project_year: Number(dayjs(value.project_year).year()),
-                                project_name: value.project_name,
-                                project_code: value.project_code,
-                                project_status: value.project_status as ProjectStatus,
-                                barangays: barangay,
-                                appropriation: value.appropriation,
-                                approved_budget_contact: value.approved_budget_contact,
-                                contractor_id: Number(value.contractor_id),
-                                contract_cost: value.contract_cost,
-                                start_date: value.start_date,
-                                calendar_days: null,
-                                time_extensions: null,
-                                target_date: value.target_date,
-                                project_type_id: Number(value.project_type_id),
-                                project_category_id: Number(value.project_category_id),
-                                project_sof_id: Number(value.project_sof_id),
-                                project_incharge_id: Number(value.project_incharge_id),
-                                sustainable_development_goals: sdg,
-                                sector: sector,
-                                project_takers_id: Number(value.project_takers_id),
-                                accomplished: value.accomplished,
-                                remarks: value.remarks,
-                                prepared_users_id: Number(session_data.users.id)
-                            },
+                    if (userDetailsSelector.data?.info_id == null) {
+                        notifications.show({
+                            color: "red",
+                            title: 'Oops!',
+                            message: "You can’t add a project until you update your account information.",
+                            position: "top-center"
+                        })
+                    } else {
+                        startTransition(() => {
+                            formAction({
+                                data: {
+                                    project_year: Number(dayjs(value.project_year).year()),
+                                    project_name: value.project_name,
+                                    project_code: value.project_code,
+                                    project_status: value.project_status as ProjectStatus,
+                                    barangays: barangay,
+                                    appropriation: value.appropriation,
+                                    approved_budget_contact: value.approved_budget_contact,
+                                    contractor_id: Number(value.contractor_id),
+                                    contract_cost: value.contract_cost,
+                                    start_date: value.start_date,
+                                    calendar_days: null,
+                                    time_extensions: null,
+                                    target_date: value.target_date,
+                                    project_type_id: Number(value.project_type_id),
+                                    project_category_id: Number(value.project_category_id),
+                                    project_sof_id: Number(value.project_sof_id),
+                                    project_incharge_id: Number(value.project_incharge_id),
+                                    sustainable_development_goals: sdg,
+                                    sector: sector,
+                                    project_takers_id: Number(value.project_takers_id),
+                                    accomplished: value.accomplished,
+                                    remarks: value.remarks,
+                                    prepared_users_id: Number(session_data.users.id)
+                                },
                             session_data: session_data
                         })   
                     })
+                    }
                 }}
             >
                 {() => (
