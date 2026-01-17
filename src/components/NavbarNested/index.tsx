@@ -19,6 +19,7 @@ const NavList = [
     links: [
       { label: 'City Funded', link: '/dashboard/projects/city-funded' },
       { label: 'Brgy Funded', link: '/dashboard/projects/brgy-funded' },
+      { label: 'Add Projects', link: '/dashboard/projects/add' },
     ],
   },
   { label: 'Contractors', icon: IconUsersGroup, link: "/dashboard/contractors" },
