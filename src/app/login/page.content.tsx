@@ -16,15 +16,15 @@ export default function Content() {
                     width={80} 
                     height={80} 
                     alt="mis logo" />
-                <Image 
+                {/* <Image 
                     src={'/assets/seal.png'} 
                     width={80} 
                     height={80} 
-                    alt="City logo" />
+                    alt="City logo" /> */}
             </Flex>
             <Text label="Sign in to your account" ft="heavyTitle" />
             <Text label={`Engineer's Office Management Information System`} ft="medium" />
-            <Text label={`City of Pagadian`} ft="medium" />
+            {/* <Text label={`City of Pagadian`} ft="medium" /> */}
             <Paper my="md" p="xl" w={rem(450)}>
                 <LoginForm />
             </Paper>
