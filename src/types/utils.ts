@@ -1,4 +1,5 @@
 import { ResponseDefaultMessage } from "@/entity/Response.enum"
+import { ResponseLogin } from "./Users"
 
 export type ActionReturnState<T> = {
     message: ResponseDefaultMessage,
@@ -19,3 +20,5 @@ export type SessionData = {
     auth: string,
     sid: string
 }
+
+export type UserDetails = Omit<ResponseLogin, "jwt_token" | "session_id">

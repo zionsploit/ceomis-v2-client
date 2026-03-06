@@ -22,7 +22,12 @@ export default function ProjectAppropriationBySector() {
     if (isValidating) return <LoadingComponent />
     if (isLoading) return <LoadingComponent />
     if (error) return <ErrorComponent />
-    if (!data || data.length === 0) return <NoDataComponent />
+    if (!data || data.length === 0) return <>
+        <Paper my="md">
+            <Text label="Sectoral Analysis" ft="smallTitle" />
+            <NoDataComponent />
+        </Paper>
+    </>
 
     return <>
         <Paper my="md">

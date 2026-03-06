@@ -10,3 +10,8 @@ export enum ResponseDefaultMessage {
     Success,
     Failure
 }
+
+export enum ProjectFundedType {
+    BarangayFunded,
+    CityFunded
+}

@@ -2,21 +2,22 @@
 
 import { Paper } from "@/components/Paper";
 import { Text } from "@/components/Text";
-import { ResponseCategories, ResponseContractors, ResponseIncharge, ResponsePrepareAllSettings, ResponseSourceOfFunds, ResponseTakers, ResponseTypes } from "@/types/Settings";
+import { ResponseCategories, ResponseContractors, ResponseIncharge, ResponseSourceOfFunds, ResponseTakers, ResponseTypes } from "@/types/Settings";
 import { Button, Divider, Flex, Group, Select, Stack, TextInput, Text as MText, Checkbox, Grid, rem, ScrollArea, Box, ActionIcon, Alert, NumberInput, Textarea } from "@mantine/core";
 import { DatePickerInput, YearPickerInput } from '@mantine/dates';
 import { useListState } from "@mantine/hooks";
 import { IconAlertCircle, IconX } from "@tabler/icons-react";
 import { FastField, Form, Formik } from "formik";
 import Link from "next/link";
-import { startTransition, useActionState, useEffect, useRef, useState } from "react";
+import { startTransition, useActionState, useContext, useEffect, useRef, useState } from "react";
 import * as yup from "yup"
 import { actionAddProjects } from "./page.form_action";
 import { ResponseDefaultMessage } from "@/entity/Response.enum";
 import { notificationShow, updateFailureNotification, updateSuccessNotication } from "@/components/Notification";
 import { ProjectStatus } from "@/types/Projects";
 import dayjs from "dayjs";
-import { SessionData } from "@/types/utils";
+import { PageContext } from "./context/page.context";
+import { useAppSelector } from "@/provider/reactRedux/hooks";
 
 export const projectsFormSchema = yup.object().shape({
     project_year: yup.date().required("Project year is required").default(new Date()),
@@ -38,17 +39,18 @@ export const projectsFormSchema = yup.object().shape({
     remarks: yup.string().required("Remarks is required").default("")
 })
 
-export default function AddProjects({
-    session_data,
-    projects_data
-}: Readonly<{session_data: SessionData, projects_data: ResponsePrepareAllSettings}>) {
+export default function AddProjects() {
+    const { projects_data, session_data } = useContext(PageContext)
     const [state, formAction, pending] = useActionState(actionAddProjects, {message: ResponseDefaultMessage.None, response_data: ""})
+    const getUserDetailsSelector = useAppSelector((state) => state.userDetailsReducer.userDetails)
+
     const [projectTakersData] = useState<Array<ResponseTakers>>(projects_data.s_takers)
     const [projectInchargeData] = useState<Array<ResponseIncharge>>(projects_data.s_incharge)
     const [projectSourceOfFundsData] = useState<Array<ResponseSourceOfFunds>>(projects_data.s_sof)
     const [projectCategoriesData] = useState<Array<ResponseCategories>>(projects_data.s_categories)
     const [projectTypeData] = useState<Array<ResponseTypes>>(projects_data.s_type)
     const [constractorsData] = useState<Array<ResponseContractors>>(projects_data.contractors)
+    
     const [selectedSector, setSelectedSector] = useListState(projects_data.s_sector.map((value) => {
         return {
             checked: false,
@@ -82,10 +84,6 @@ export default function AddProjects({
     }, [state, pending])
 
     return <>
-        <Flex align="center" justify="space-between">
-            <Text ft="mediumTitle" label={"Add Projects"} />
-            <Button variant="light" component={Link} href="/dashboard/projects/city-funded">Back</Button>
-        </Flex>
         <Paper my="lg">
             <Formik
                 initialValues={projectsFormSchema.getDefault()}
@@ -580,7 +578,7 @@ export default function AddProjects({
                                 )}
                             </FastField>
                             <Flex my="md" justify="space-between">
-                                <Text c="dimmed" ft="small" fs="italic" label={`Prepared By ${session_data.users.email}`} />
+                                <Text c="dimmed" ft="small" fs="italic" label={`Prepared By: ${getUserDetailsSelector.data?.info_last_name ?? "<no-user-provided>"}`} />
                                 <Button type="submit">Submit</Button>
                             </Flex>
                         </Stack>

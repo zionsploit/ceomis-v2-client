@@ -1,5 +1,5 @@
 import { ProjectStatus } from "@/types/Projects";
-import { SessionData } from "@/types/utils";
+import { SessionData, UserDetails } from "@/types/utils";
 import { decipher_session_data } from "./crypto";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
@@ -83,6 +83,20 @@ export async function get_auth_session(cookies: () => Promise<ReadonlyRequestCoo
         const session_data: SessionData = JSON.parse(decipher) satisfies SessionData
 
        return session_data
+    }
+
+    return null
+}
+
+export async function get_user_details(cookies: () => Promise<ReadonlyRequestCookies>): Promise<UserDetails | null> {
+    const cookie = await cookies()
+
+    if (cookie.has("_user_details")) {
+        const get_user_details = cookie.get("_user_details")
+
+        const parse_user_details = JSON.parse(get_user_details?.value ?? "") as UserDetails
+
+        return parse_user_details
     }
 
     return null

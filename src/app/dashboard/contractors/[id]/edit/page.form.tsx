@@ -1,6 +1,6 @@
 "use client"
 
-import { ResponseContractors } from "@/types/Settings";
+import { ResponseContractorsWithProjects } from "@/types/Settings";
 import { Form, Formik } from "formik";
 import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
 import { Text } from "@/components/Text";
@@ -16,7 +16,7 @@ import { SessionData } from "@/types/utils";
 export default function ContractorsEditForm({
     session_data,
     contractors
-}: Readonly<{session_data: SessionData, contractors: ResponseContractors}>) {
+}: Readonly<{session_data: SessionData, contractors: ResponseContractorsWithProjects}>) {
     const pageTitleContext = useContext(PageTitleContext)
     const [state, formAction, pending] = useActionState(actionUpdateContractor, { message: ResponseDefaultMessage.Success, response_data: "" })
     const toastIdRef = useRef<string | null>(null)
@@ -40,14 +40,14 @@ export default function ContractorsEditForm({
 
     return <>
         <Formik
-            initialValues={contractors}
+            initialValues={contractors.contractor}
             validationSchema={contractorsSchema}
             onSubmit={(value) => {
                 startTransition(() => {
                     formAction({
                         data: {
                             ...value,
-                            id: contractors.id
+                            id: contractors.contractor.id
                         },
                         session_data: session_data
                     })

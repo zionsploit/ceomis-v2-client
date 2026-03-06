@@ -4,9 +4,9 @@ import { Paper } from "@/components/Paper";
 import { Text } from "@/components/Text";
 import { ResponseProjectsByFund } from "@/types/Settings";
 import { getSearchResults } from "@/utils/helper";
-import { Anchor, Button, Flex, Group, Loader, NumberFormatter, px, rem, Table, TextInput } from "@mantine/core";
+import { Anchor, Flex, Group, Loader, NumberFormatter, px, rem, Table, TextInput } from "@mantine/core";
 import { useDebouncedCallback } from "@mantine/hooks";
-import { IconPlus } from "@tabler/icons-react";
+// import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 
@@ -41,7 +41,7 @@ export default function PageTable({
                     value={searchData}
                     rightSection={searchLoading && <Loader size="xs" />}
                 />
-                <Button component={Link} href="brgy-funded/add" size="sm" leftSection={<IconPlus />}>ADD BRGY FUND PROJECTS</Button>
+                {/* <Button component={Link} href="brgy-funded/add" size="sm" leftSection={<IconPlus />}>ADD BRGY FUND PROJECTS</Button> */}
             </Group>
             <Table mt="xl" highlightOnHoverColor="">
                 <Table.Thead>

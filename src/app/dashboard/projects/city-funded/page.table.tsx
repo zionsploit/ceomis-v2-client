@@ -4,9 +4,9 @@ import { Paper } from "@/components/Paper";
 import { Text } from "@/components/Text";
 import { ResponseProjectsByFund } from "@/types/Settings";
 import { dataPagination, getSearchResults } from "@/utils/helper";
-import { Anchor, Button, Flex, Group, Loader, NumberFormatter, Pagination, px, rem, Select, Table, TextInput } from "@mantine/core";
+import { Anchor, Flex, Group, Loader, NumberFormatter, Pagination, px, rem, Select, Table, TextInput } from "@mantine/core";
 import { useDebouncedCallback } from "@mantine/hooks";
-import { IconPlus } from "@tabler/icons-react";
+// import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
 
@@ -52,7 +52,7 @@ export default function PageTable({
                     value={searchData}
                     rightSection={searchLoading && <Loader size="xs" />}
                 />
-                <Button component={Link} href="city-funded/add" size="sm" leftSection={<IconPlus />}>ADD CITY FUND PROJECTS</Button>
+                {/* <Button component={Link} href="city-funded/add" size="sm" leftSection={<IconPlus />}>ADD CITY FUND PROJECTS</Button> */}
             </Group>
             <Table mt="xl" highlightOnHoverColor="">
                 <Table.Thead>

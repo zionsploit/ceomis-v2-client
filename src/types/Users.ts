@@ -12,7 +12,7 @@ export type RequestUserLogin = { email: string, password: string, };
 
 export type ResponseAccountInfoForUsersWithFullInfo = { user_info_id: number, user_info_first_name: string, user_info_middle_name: string, user_info_last_name: string, };
 
-export type ResponseLogin = { jwt_token: string, session_id: string, };
+export type ResponseLogin = { jwt_token: string, session_id: string, info_id: number | null, info_first_name: string | null, info_middle_name: string | null, info_last_name: string | null, };
 
 export type ResponseUserRoles = { id: number, name: string, };
 
