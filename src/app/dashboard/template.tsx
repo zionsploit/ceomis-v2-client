@@ -66,11 +66,11 @@ export default function DashboardTemplate({
                     width={70} 
                     height={70} 
                     alt="mis logo" />
-                <Image 
+                {/* <Image 
                     src={'/assets/seal.png'} 
                     width={70} 
                     height={70} 
-                    alt="City logo" />
+                    alt="City logo" /> */}
               </Flex>
             </Group>
             <Divider mt="xl" />
