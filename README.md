@@ -5,8 +5,8 @@
 ### Clone the repository
 
 ``` bash
-git clone https://github.com/yourusername/yourrepo.git
-cd yourrepo
+git clone https://github.com/zionsploit/ceomis-v2-client.git
+cd ceomis-v2-client
 ```
 
 ### Install dependencies
